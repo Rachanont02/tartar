@@ -43,37 +43,70 @@
     </main>
 
     <footer>© 2025 Fillus</footer>
+    <script src="app.js "></script>
     <script type="module">
-      import { listTrips, addTrip } from './api.js';
+      import { listTrips, addTrip, deleteTrip } from './api.js';
     
-      async function refresh() {
-        const list = document.getElementById('trip-list');
-        list.innerHTML = 'กำลังโหลด...';
-        try {
+      const listEl = document.getElementById('trip-list');
+      const statusEl = document.getElementById('status');
+    
+      const fmt = (iso) =>
+        iso ? new Date(iso).toLocaleDateString('th-TH', { day:'numeric', month:'short', year:'numeric' }) : '';
+    
+      const esc = (s='') => s
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    
+      async function refreshList(){
+        statusEl.textContent = 'กำลังโหลดรายการ...';
+        try{
           const rows = await listTrips();
-          list.innerHTML = rows.map(r =>
-            `<li><b>${r.title}</b> (${r.start_date} → ${r.end_date})<br>${r.notes}</li>`
-          ).join('');
-        } catch (e) {
-          list.innerHTML = 'โหลดไม่สำเร็จ ❌';
-          console.error(e);
+          if (!rows.length){
+            listEl.innerHTML = '<li>ยังไม่มีทริป</li>';
+          } else {
+            listEl.innerHTML = rows.map(r => `
+              <li class="trip" data-id="${esc(r.id)}">
+                <div class="trip-line">
+                  <div class="trip-info">
+                    <strong>${esc(r.title || '')}</strong>
+                    <small>(${fmt(r.start_date)} – ${fmt(r.end_date)})</small><br>
+                    <small>${esc(r.notes || '')}</small>
+                  </div>
+                  <button class="btn-delete" data-del="${esc(r.id)}">ลบ</button>
+                </div>
+              </li>
+            `).join('');
+          }
+          statusEl.textContent = 'โหลดสำเร็จ ✅';
+        }catch(err){
+          console.error(err);
+          statusEl.textContent = 'โหลดไม่สำเร็จ ❌';
+          listEl.innerHTML = '<li>ดึงข้อมูลไม่สำเร็จ</li>';
         }
       }
     
-      // ตัวอย่างเพิ่มทริปใหม่ 1 อัน
-      async function testAdd() {
-        await addTrip({
-          title: "Oslo weekend",
-          start_date: "2025-09-10",
-          end_date: "2025-09-12",
-          notes: "ลองเพิ่มจาก PWA"
-        });
-        await refresh();
-      }
+      // ลบด้วย event delegation (คลิกปุ่มลบของรายการไหนก็จับได้)
+      listEl.addEventListener('click', async (e) => {
+        const id = e.target?.dataset?.del;
+        if (!id) return;
+        if (!confirm('ยืนยันลบทริปนี้?')) return;
     
-      // เรียกใช้
-      refresh();
-      testAdd(); // uncomment ถ้าอยากลองเพิ่มจริง
+        try{
+          e.target.disabled = true;
+          e.target.textContent = 'กำลังลบ...';
+          await deleteTrip(id);
+          await refreshList();
+        }catch(err){
+          console.error(err);
+          alert('ลบไม่สำเร็จ');
+        }finally{
+          e.target.disabled = false;
+          e.target.textContent = 'ลบ';
+        }
+      });
+    
+      // เรียกครั้งแรก
+      refreshList();
     </script>
     
   </body>
