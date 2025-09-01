@@ -1,5 +1,5 @@
 // === ตั้งค่าให้ตรงของคุณ ===
-const API_BASE = 'https://script.google.com/macros/s/AKfycbxjXN75cpNFGR63Rc5UwMgLUqiWF3lOiMoWY61BFKmgjLJ8BLdS9TJb7sbGNqLDzOa0HA/exec'; // URL /exec จาก Deploy
+const API_BASE = 'https://script.google.com/macros/s/AKfycbyAs5Fs1rlK9qTG-fwpSSdm5teI3I4jFdvt_4ksg7Ehq2K2LduK7Jutx5dhgR5kZHtOLw/exec'; // URL /exec จาก Deploy
 const API_TOKEN = 'XksbUeMRS34MVhFfvyY3zyQYi2Z7HADX';
 
 export async function listTrips() {
