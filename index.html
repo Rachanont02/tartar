@@ -10,7 +10,6 @@
     <title>TarTar</title>
 
     <!-- PWA -->
-    <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#EEEFF3">
 
     <!-- iOS -->
@@ -38,12 +37,8 @@
       </section>
 
       <section class="card">
-        <h2>วิธีติดตั้งบน iOS</h2>
-        <ol>
-          <li>เปิดหน้านี้ด้วย <strong>Safari</strong></li>
-          <li>กด <strong>Share</strong> → <strong>Add to Home Screen</strong></li>
-          <li>กด <strong>Add</strong></li>
-        </ol>
+        <h2>รายการทริป</h2>
+        <ul id="trip-list"></ul>
       </section>
     </main>
 
@@ -52,42 +47,33 @@
       import { listTrips, addTrip } from './api.js';
     
       async function refresh() {
-        const status = document.getElementById('status');
-        status.textContent = 'กำลังโหลด Trips...';
+        const list = document.getElementById('trip-list');
+        list.innerHTML = 'กำลังโหลด...';
         try {
           const rows = await listTrips();
-          status.textContent = `พบ ${rows.length} ทริป`;
-          console.log(rows);
-          // TODO: วาดรายการ trips ลง DOM
+          list.innerHTML = rows.map(r =>
+            `<li><b>${r.title}</b> (${r.start_date} → ${r.end_date})<br>${r.notes}</li>`
+          ).join('');
         } catch (e) {
-          status.textContent = 'โหลดข้อมูลไม่สำเร็จ ❌';
+          list.innerHTML = 'โหลดไม่สำเร็จ ❌';
           console.error(e);
         }
       }
     
-      // ตัวอย่างเพิ่มทริป
-      // await addTrip({ title:'Oslo weekend', start_date:'2025-09-10', end_date:'2025-09-12', notes:'คู่เรา' })
-      async function testAPI() {
-        try {
-          // เพิ่มทริปใหม่
-          const newId = await addTrip({
-            title: "Oslo Weekend",
-            start_date: "2025-09-10",
-            end_date: "2025-09-12",
-            notes: "ลองเพิ่มจาก PWA"
-          });
-          console.log("เพิ่มสำเร็จ id =", newId);
-    
-          // โหลดรายการทั้งหมด
-          const trips = await listTrips();
-          console.log("ทั้งหมด =", trips);
-        } catch (err) {
-          console.error("API error:", err);
-        }
+      // ตัวอย่างเพิ่มทริปใหม่ 1 อัน
+      async function testAdd() {
+        await addTrip({
+          title: "Oslo weekend",
+          start_date: "2025-09-10",
+          end_date: "2025-09-12",
+          notes: "ลองเพิ่มจาก PWA"
+        });
+        await refresh();
       }
-
-      testAPI();
+    
+      // เรียกใช้
       refresh();
+      testAdd(); // uncomment ถ้าอยากลองเพิ่มจริง
     </script>
     
   </body>
