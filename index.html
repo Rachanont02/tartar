@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TarTar</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#EEEFF3">
+
+  <!-- iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="TarTar">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>TarTar ✨</h1>
+    <p>บันทึกความทรงจำของคู่เรา และเป็นผู้ช่วยการเดินทาง</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>สถานะแอป</h2>
+      <p id="status">กำลังตรวจสอบ...</p>
+      <div class="actions">
+        <button id="cache-btn">โหลดไฟล์ล่วงหน้า</button>
+        <button id="clear-cache-btn">ล้าง cache</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>วิธีติดตั้งบน iOS</h2>
+      <ol>
+        <li>เปิดหน้านี้ด้วย <strong>Safari</strong></li>
+        <li>กด <strong>Share</strong> → <strong>Add to Home Screen</strong></li>
+        <li>กด <strong>Add</strong></li>
+      </ol>
+    </section>
+  </main>
+
+  <footer>© 2025 TarTar</footer>
+  <script src="app.js"></script>
+</body>
+</html>
