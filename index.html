@@ -67,7 +67,26 @@
     
       // ตัวอย่างเพิ่มทริป
       // await addTrip({ title:'Oslo weekend', start_date:'2025-09-10', end_date:'2025-09-12', notes:'คู่เรา' })
+      async function testAPI() {
+        try {
+          // เพิ่มทริปใหม่
+          const newId = await addTrip({
+            title: "Oslo Weekend",
+            start_date: "2025-09-10",
+            end_date: "2025-09-12",
+            notes: "ลองเพิ่มจาก PWA"
+          });
+          console.log("เพิ่มสำเร็จ id =", newId);
     
+          // โหลดรายการทั้งหมด
+          const trips = await listTrips();
+          console.log("ทั้งหมด =", trips);
+        } catch (err) {
+          console.error("API error:", err);
+        }
+      }
+      
+      testAPI();
       refresh();
     </script>
     
