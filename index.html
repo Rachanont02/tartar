@@ -48,7 +48,7 @@
     </main>
 
     <footer>© 2025 Fillus</footer>
-    <script type="module" src="app.js">
+    <script type="module">
       import { listTrips, addTrip } from './api.js';
     
       async function refresh() {
@@ -85,7 +85,7 @@
           console.error("API error:", err);
         }
       }
-      
+
       testAPI();
       refresh();
     </script>
