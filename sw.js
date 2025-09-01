@@ -5,7 +5,9 @@ const PRECACHE = [
   './app.js',
   './manifest.json?v=2',
   './icons/icon-192.png',
-  './icons/icon-512.png'
+  './icons/icon-512.png',
+  './icons/icon-180.png',
+  './api.js'
 ];
 
 
@@ -52,4 +54,18 @@ self.addEventListener('fetch', event => {
       await cache.addAll(PRECACHE);
     })());
   }
+});
+
+self.addEventListener('fetch', event => {
+  const url = new URL(event.request.url);
+  // ถ้าเป็น Apps Script API → network-first ไม่จับแคช
+  if (url.host.includes('script.google.com')) return;
+
+  if (event.request.method !== 'GET') return;
+  event.respondWith(
+    fetch(event.request).then(res => {
+      caches.open(CACHE_NAME).then(c => c.put(event.request, res.clone()));
+      return res;
+    }).catch(() => caches.match(event.request).then(m => m || caches.match('./index.html')))
+  );
 });
