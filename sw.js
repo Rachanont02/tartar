@@ -1,13 +1,13 @@
-const CACHE_NAME = 'tartar-v1';
+const CACHE_NAME = 'tartar-v2';
 const PRECACHE = [
-  'index.html',
-  'style.css',
-  'app.js',
-  'manifest.json',
-  'icons/icon-180.png',
-  'icons/icon-192.png', 
-  'icons/icon-512.png',
+  './index.html',
+  './style.css',
+  './app.js',
+  './manifest.json?v=2',
+  './icons/icon-192.png',
+  './icons/icon-512.png'
 ];
+
 
 self.addEventListener('install', event => {
   event.waitUntil((async () => {

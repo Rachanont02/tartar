@@ -1,8 +1,8 @@
 {
   "name": "TarTar",
   "short_name": "TarTar",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "/tartar/index.html?v=2",
+  "scope": "/tartar/",
   "display": "standalone",
   "background_color": "#EEEFF3",
   "theme_color": "#EEEFF3",
