@@ -28,22 +28,12 @@
 
     <main>
       <section class="card">
-        <h2>สถานะแอป</h2>
-        <p id="status">กำลังตรวจสอบ...</p>
-        <div class="actions">
-          <button id="cache-btn">โหลดไฟล์ล่วงหน้า</button>
-          <button id="clear-cache-btn">ล้าง cache</button>
-        </div>
-      </section>
-
-      <section class="card">
         <h2>รายการทริป</h2>
         <ul id="trip-list"></ul>
       </section>
     </main>
 
     <footer>© 2025 Fillus</footer>
-    <script src="app.js "></script>
     <script type="module">
       import { listTrips, addTrip, deleteTrip } from './api.js';
     
