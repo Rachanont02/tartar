@@ -1,5 +1,5 @@
 // sw.js (clean)
-const VERSION = 'v5';
+const VERSION = 'v6';
 const CACHE_NAME = `tartar-${VERSION}`;
 
 // ใช้พาธแบบ relative เพื่อรองรับ /tartar/
